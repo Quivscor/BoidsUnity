@@ -10,8 +10,7 @@ public class CompositeBehavior : FlockBehavior
 
     public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
-        if (weights.Count == 0)
-            FillWeights();
+        FillWeights();
 
         //handle data mismatch
         if (weights.Count != behaviors.Count)
