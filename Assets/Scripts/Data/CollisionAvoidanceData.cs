@@ -1,11 +1,11 @@
 ﻿public class CollisionAvoidanceData
 {
-    public CollisionAvoidanceData(float minimalDistance, float degreeOfDecay)
+    public CollisionAvoidanceData(float weight, float minDistance)
     {
-        this.minimalDistance = minimalDistance;
-        this.degreeOfDecay = degreeOfDecay;
+        this.weight = weight;
+        this.minDistance = minDistance;
     }
 
-    public float minimalDistance;
-    public float degreeOfDecay;
+    public float weight;
+    public float minDistance;
 }

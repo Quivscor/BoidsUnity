@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Flock/Behavior/Composite")]
+[System.Serializable, CreateAssetMenu(menuName = "Flock/Behavior/Composite")]
 public class CompositeBehavior : FlockBehavior
 {
     public List<FlockBehavior> behaviors;
-    public List<float> weights;
+    private List<float> weights;
 
     public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
+        if (weights.Count == 0)
+            FillWeights();
+
         //handle data mismatch
         if (weights.Count != behaviors.Count)
         {
@@ -41,5 +44,14 @@ public class CompositeBehavior : FlockBehavior
         return move;
 
 
+    }
+
+    private void FillWeights()
+    {
+        weights = new List<float>();
+        weights.Add(UIDataAccessor.Instance.GetFlockingForceData().weight);
+        weights.Add(UIDataAccessor.Instance.GetCollisionAvoidanceData().weight);
+        weights.Add(UIDataAccessor.Instance.GetGroupingForceData().weight);
+        weights.Add(UIDataAccessor.Instance.GetObstacleAvoidanceData().weight);
     }
 }

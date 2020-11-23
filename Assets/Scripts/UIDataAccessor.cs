@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIDataAccessor : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class UIDataAccessor : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(this);
+            Destroy(this.gameObject);
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public FlockingForceData GetFlockingForceData()
@@ -34,6 +37,11 @@ public class UIDataAccessor : MonoBehaviour
 
     public ObstacleAvoidanceData GetObstacleAvoidanceData()
     {
-        return new ObstacleAvoidanceData(sliders[5].value, sliders[6].value, sliders[7].value);
+        return new ObstacleAvoidanceData(sliders[5].value, sliders[6].value);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }

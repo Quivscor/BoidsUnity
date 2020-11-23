@@ -16,22 +16,25 @@ public class Flock : MonoBehaviour
     public float driveFactor = 10f;
     [Range(1f, 100f)]
     public float maxSpeed = 5f;
-    [Range(1f, 10f)]
-    public float neighborRadius = 1.5f;
-    [Range(0f, 1f)]
-    public float avoidanceRadiusMultiplier = 0.5f;
+    //[Range(1f, 10f)]
+    //public float neighborRadius = 1.5f;
+    //[Range(0f, 1f)]
+    //public float avoidanceRadiusMultiplier = 0.5f;
 
     float squareMaxSpeed;
     float squareNeighborRadius;
     float squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
+    float squareObstacleRadius;
+    public float SquareOobstacleRadius { get { return squareObstacleRadius; } }
 
     // Start is called before the first frame update
     void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
-        squareNeighborRadius = neighborRadius * neighborRadius;
-        squareAvoidanceRadius = squareNeighborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
+        squareNeighborRadius = UIDataAccessor.Instance.GetGroupingForceData().radius;
+        squareAvoidanceRadius = UIDataAccessor.Instance.GetCollisionAvoidanceData().minDistance;
+        squareObstacleRadius = UIDataAccessor.Instance.GetObstacleAvoidanceData().radius;
 
         for (int i = 0; i < startingCount; i++)
         {
@@ -70,7 +73,7 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
-        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius);
+        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, UIDataAccessor.Instance.GetGroupingForceData().radius);
         foreach (Collider2D c in contextColliders)
         {
             if (c != agent.AgentCollider)
