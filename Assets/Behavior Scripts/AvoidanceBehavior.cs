@@ -29,7 +29,7 @@ public class AvoidanceBehavior : FilteredFlockBehavior
             }
             else
             {
-                if (Vector2.SqrMagnitude(item.position - agent.transform.position) < flock.SquareOobstacleRadius)
+                if (Vector2.SqrMagnitude(item.position - agent.transform.position) < flock.SquareObstacleRadius)
                 {
                     nAvoid++;
                     avoidanceMove += (Vector2)(agent.transform.position - item.position);

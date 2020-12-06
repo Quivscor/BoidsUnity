@@ -26,7 +26,7 @@ public class Flock : MonoBehaviour
     float squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
     float squareObstacleRadius;
-    public float SquareOobstacleRadius { get { return squareObstacleRadius; } }
+    public float SquareObstacleRadius { get { return squareObstacleRadius; } }
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +61,8 @@ public class Flock : MonoBehaviour
             //agent.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
 
             Vector2 move = behavior.CalculateMove(agent, context, this);
+            if (move == Vector2.zero)
+                move = agent.transform.up;
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)
             {
